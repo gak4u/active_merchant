@@ -107,6 +107,12 @@ module ActiveMerchant #:nodoc:
         xml.tag! 'JetPay' do
           # The basic values needed for any request
           xml.tag! 'TerminalID', @options[:login]
+          if @options[:version]
+              xml.tag! 'Version' do
+                  xml.tag! 'Subscriber', @options[:version][:subscriber] if @options[:version][:subscriber]
+                  xml.tag! 'DLL', @options[:version][:dll] if @options[:version][:dll]
+              end
+          end
           xml.tag! 'TransactionType', transaction_type
           xml.tag! 'TransactionID', transaction_id.nil? ? generate_unique_id.slice(0, 18) : transaction_id
 
