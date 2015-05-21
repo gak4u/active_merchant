@@ -107,12 +107,12 @@ module ActiveMerchant #:nodoc:
         xml.tag! 'JetPay' do
           # The basic values needed for any request
           xml.tag! 'TerminalID', @options[:login]
-          if @options[:version]
+          # if @options[:version]
               xml.tag! 'Version' do
-                  xml.tag! 'Subscriber', @options[:version][:subscriber] if @options[:version][:subscriber]
-                  xml.tag! 'DLL', @options[:version][:dll] if @options[:version][:dll]
+                  xml.tag! 'Subscriber', @options[:version][:subscriber]# if @options[:version][:subscriber]
+                  xml.tag! 'DLL', @options[:version][:dll]# if @options[:version][:dll]
               end
-          end
+              # end
           xml.tag! 'TransactionType', transaction_type
           xml.tag! 'TransactionID', transaction_id.nil? ? generate_unique_id.slice(0, 18) : transaction_id
 
@@ -189,9 +189,6 @@ module ActiveMerchant #:nodoc:
         return {} if body.blank?
 
         xml = REXML::Document.new(body)
-        puts "BODY>>>"
-        puts body
-        puts "<<<<BODY"
 
         response = {}
         xml.root.elements.to_a.each do |node|
